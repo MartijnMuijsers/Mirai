@@ -14,13 +14,13 @@ jobs:
           version: 'latest'
           java-version: '17'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: '1.18.2-Purpur'
+          automatic_release_tag: 1.18.2"
       - name: Pull Gradle Cache
         uses: actions/cache@v3.0.1
         id: gradle-cache
         with:
           path: ~/.gradle
-          key: ${{ runner.os }}-maven-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-java-17
+          key: ${{ runner.os }}-maven-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-java-${{ matrix.java }}
       - name: Configure Git
         run: |
           git config --global user.email "no-reply@github.com"
@@ -34,14 +34,14 @@ jobs:
       - name: Archive Paperclip
         uses: actions/upload-artifact@v3.0.0
         with:
-          name: Mirai-Purpur-1.18.2
+          name: Mirai-1.18.2
           path: build/libs/mirai-paperclip-1.18.2-R0.1-SNAPSHOT-reobf.jar
       - name: Release
-        if: github.ref_name == 'purpur/1.18.2'
+        if: github.ref_name == 'ver/1.18.2'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: '1.18.2-Purpur'
+          automatic_release_tag: '1.18.2'
           prerelease: false
-          title: 'Mirai-Purpur 1.18.2'
+          title: 'Mirai 1.18.2'
           files: build/libs/mirai-paperclip-1.18.2-R0.1-SNAPSHOT-reobf.jar
